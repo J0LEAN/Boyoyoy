@@ -188,6 +188,48 @@
     $$("[data-phone]").forEach(function (pre) { if (pre._phone) pre._phone.stop(); });
   });
 
+
+  /* ---------- Dessins en caractères pour les projets ---------- */
+
+  function dline(parts) {
+    return parts.map(function (x) {
+      return typeof x === "string" ? esc(x) : '<span class="' + x[0] + '">' + esc(x[1]) + "</span>";
+    }).join("");
+  }
+  var DESSINS = {
+    // Une robe suspendue à un cintre, qui se balance doucement.
+    cintre: [
+      [["d-a", "         ?"]],
+      [["d-a", "        _|_"]],
+      [["d-a", "   .---'   '---."]],
+      [["d-a", "  /_____________\\"]],
+      ["     \\  ", ["d-b", ".-."], "  /"],
+      ["      | ", ["d-b", "| |"], " |"],
+      ["      | ", ["d-b", "'-'"], " |"],
+      ["      |  ", ["d-b", "*"], "  |"],
+      ["     /  ", ["d-b", "* *"], "  \\"],
+      ["    /  ", ["d-b", "* * *"], "  \\"],
+      ["   /  ", ["d-b", "* * * *"], "  \\"],
+      ["  /_____________\\"]
+    ],
+    // Une graine qui pousse : le prochain projet.
+    pousse: [
+      ["      ", ["d-a", "\\ | /"]],
+      ["    ", ["d-a", "--"], "  ", ["d-b", "@"], "  ", ["d-a", "--"]],
+      ["      ", ["d-a", "/"], " ", ["d-b", "|"], " ", ["d-a", "\\"]],
+      ["     ", ["d-b", "_\\"], "|", ["d-b", "/_"]],
+      ["  .----|----."],
+      ["   \\       /"],
+      ["    '-----'"]
+    ]
+  };
+  function dessinHTML(nom, extra) {
+    var d = DESSINS[nom];
+    if (!d) return "";
+    return '<pre class="dessin dessin-' + esc(nom) + (extra ? " " + extra : "") + '" aria-hidden="true">' +
+      d.map(dline).join("\n") + "</pre>";
+  }
+
   /* ---------- Cartes projets ---------- */
 
   function chip(statut) {
@@ -220,14 +262,14 @@
         (tags ? '<ul class="tags" aria-label="Mots-clés">' + tags + "</ul>" : "") +
         '<span class="card-cta">Ouvrir la page <span aria-hidden="true">→</span></span>' +
       "</div>" +
-      (p.ecran && p.ecran.length ? '<pre class="phone" data-phone="' + esc(p.slug) + '" aria-hidden="true"></pre>' : "") +
+      (p.ecran && p.ecran.length ? '<pre class="phone" data-phone="' + esc(p.slug) + '" aria-hidden="true"></pre>' : dessinHTML(p.dessin)) +
     "</a>";
   }
 
   var cards = $("[data-cards]");
   if (cards) {
     cards.innerHTML = projets.map(cardHTML).join("") +
-      '<div class="card card-slot">' +
+      '<div class="card card-slot">' + dessinHTML("pousse") +
         '<pre aria-hidden="true"><span class="c-prompt">$</span> mkdir projets/prochain\n' +
         '<span class="c-prompt">$</span> claude "on construit quoi ?"\n<span class="caret"></span></pre>' +
         "<div><p>Le prochain projet arrivera ici.</p>" +
@@ -371,7 +413,8 @@
           (p.ecran && p.ecran.length
             ? '<figure class="phone-box"><pre class="phone" data-phone="' + esc(p.slug) + '" aria-hidden="true"></pre>' +
               "<figcaption>" + esc(p.ecranLegende || "Aperçu illustratif") + "</figcaption></figure>"
-            : "") +
+            : (p.dessin ? '<figure class="phone-box">' + dessinHTML(p.dessin, "dessin-grand") +
+              (p.dessinLegende ? "<figcaption>" + esc(p.dessinLegende) + "</figcaption>" : "") + "</figure>" : "")) +
         "</aside>" +
       "</div>" +
       (next ? '<a class="next" href="#' + esc(next.slug) + '">Projet suivant : ' + esc(next.nom) + ' <span aria-hidden="true">→</span></a>' : "") +

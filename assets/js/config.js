@@ -82,6 +82,9 @@ window.BOYOYOY = {
       tags: ["mode", "web", "nextjs"],
       lien: "",
       depot: { url: "https://github.com/J0LEAN/Le-vestiaire-", public: false },
+      // Dessin en caractères sur la carte et la page ("cintre", ou un nom ajouté dans DESSINS, main.js).
+      dessin: "cintre",
+      dessinLegende: "Les tenues sont suspendues sur des cintres",
       // Couleurs propres au projet (reprises du site Le Vestiaire : rose & cerise).
       // Chaque clé remplace un jeton de couleur de Boyoyoy sur sa carte et sa page.
       theme: {
