@@ -2,7 +2,7 @@
  * Boyoyoy : la configuration du site.
  *
  * C'est le seul fichier à modifier pour changer les liens ou ajouter un projet.
- * Pour ajouter un projet : copie le bloc d'AutoTask dans `projets`, change le `slug`
+ * Pour ajouter un projet : copie le bloc de Pépouze dans `projets`, change le `slug`
  * (il devient l'adresse de la page : /#mon-projet) et remplis les champs.
  */
 window.BOYOYOY = {
@@ -22,28 +22,32 @@ window.BOYOYOY = {
 
   projets: [
     {
-      slug: "autotask",
-      nom: "AutoTask",
-      resume: "Une app mobile reliée à Claude, qui effectue des actions sur Android.",
+      slug: "pepouze",
+      nom: "Pépouze",
+      resume: "Des macros et des routines pour Android, écrites en une phrase\u00a0: «\u00a0Quand… Faire…\u00a0».",
       description: [
-        "AutoTask relie un téléphone Android à Claude. L'idée : demander une tâche, et laisser l'app effectuer les actions sur le téléphone.",
-        "Le projet démarre. Le dépôt vient d'être créé, et cette page suivra son avancement."
+        "Pépouze automatise un téléphone Android avec des règles simples. Quand le Bluetooth de la voiture se connecte, monter le volume et reprendre la musique. À 23\u00a0h, activer Ne pas déranger et baisser la luminosité.",
+        "On peut aussi le dire en une phrase\u00a0: Pépouze prépare la macro sur le téléphone, et peut passer la main à Claude pour les demandes plus complexes. Rien ne s'active avant d'avoir relu la macro.",
+        "11 déclencheurs, 29 actions, 58 exemples prêts à l'emploi, en 13 langues. Gratuite pendant le lancement."
       ],
-      // "en-developpement", "en-ligne", "en-pause" ou "idee"
-      statut: "en-developpement",
-      plateforme: "Android",
-      ia: "Claude",
-      debut: "Novembre 2026",
-      tags: ["android", "claude", "mobile"],
-      depot: { url: "https://github.com/J0LEAN/AutoTask", public: false },
-      // Adresse de la démo ou de l'app quand elle existe. Un projet web peut vivre
-      // dans ce site, par exemple "projets/autotask/".
-      lien: "",
+      // "en-developpement", "bientot", "en-ligne", "en-pause" ou "idee"
+      statut: "bientot",
+      plateforme: "Android 8 ou plus",
+      ia: "Sur le téléphone, Claude en renfort",
+      tags: ["android", "automatisation", "claude"],
+      // Le site du projet, s'il en a un. Un projet web peut aussi vivre dans
+      // ce dépôt, par exemple "projets/mon-projet/".
+      lien: "https://pepouzeapp.com",
+      lienTexte: "Voir le site de Pépouze",
+      // Facultatif : { url: "https://github.com/J0LEAN/...", public: true }
+      depot: null,
       // Ce qui défile sur l'écran du téléphone dessiné en caractères.
+      ecranAgent: "pépouze",
+      ecranLegende: "Exemple : une phrase devient une macro",
       ecran: [
-        { demande: "ouvre l'appareil photo", reponse: "ouvert" },
-        { demande: "active le mode avion", reponse: "activé" },
-        { demande: "mets un minuteur de 10 min", reponse: "lancé" }
+        { demande: "en voiture, monte le volume", reponse: "macro prête" },
+        { demande: "à 23\u00a0h, active Ne pas déranger", reponse: "macro prête" },
+        { demande: "écouteurs branchés\u00a0: musique à 60\u00a0%", reponse: "macro prête" }
       ]
     }
   ]

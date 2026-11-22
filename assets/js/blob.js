@@ -15,7 +15,6 @@
   var stage = root.querySelector(".blob-stage");
   var main = root.querySelector(".blob-main");
   var bloom = root.querySelector(".blob-bloom");
-  var readout = root.querySelector("[data-readout]");
   var pokeBtn = root.querySelector("[data-poke]");
   var ctx = main.getContext("2d");
   var bctx = bloom.getContext("2d");
@@ -56,7 +55,6 @@
   var atlas = null, ap = 0;
   var heat = new Float32Array(0);
   var t = 0, last = 0, raf = 0, running = false, inView = true, burstUntil = 0;
-  var pokes = 0, glyphCount = 0, lastReadout = 0;
 
   // Modes de vibration du bord (k = nombre de lobes), chacun est un ressort amorti.
   var modes = [];
@@ -156,7 +154,6 @@
     var cs = ap;
     var scroll = Math.floor(t * 7);
     var coreX = cx - R * 0.16 * sx, coreY = cy - R * 0.2 * sy, coreR = R * 0.62;
-    var count = 0;
     var nPal = PALETTE.length;
 
     var j0 = Math.max(0, Math.floor(cy - R * sy * 1.6)), j1 = Math.min(rows - 1, Math.ceil(cy + R * sy * 1.6));
@@ -208,7 +205,6 @@
         ctx.drawImage(atlas, BLOCK * ap, bci * ap, ap, ap, px, py, cs, cs);
         ctx.globalAlpha = alpha;
         ctx.drawImage(atlas, gi * ap, ci * ap, ap, ap, px, py, cs, cs);
-        count++;
       }
     }
 
@@ -228,23 +224,9 @@
     }
 
     ctx.globalAlpha = 1;
-    glyphCount = count;
 
     bctx.clearRect(0, 0, bloom.width, bloom.height);
     bctx.drawImage(main, 0, 0, bloom.width, bloom.height);
-  }
-
-  function updateReadout() {
-    if (!readout) return;
-    var sum = 0;
-    for (var a = 0; a < 16; a++) {
-      var dv = displacement((a / 16) * Math.PI * 2, t);
-      sum += dv * dv;
-    }
-    var rms = Math.sqrt(sum / 16);
-    readout.textContent =
-      glyphCount.toLocaleString("fr-FR") + " glyphes · ondulation " +
-      rms.toFixed(2).replace(".", ",") + " · " + pokes + (pokes > 1 ? " rebonds" : " rebond");
   }
 
   function buildAtlas() {
@@ -281,7 +263,6 @@
     heat = new Float32Array(cols * rows);
     buildAtlas();
     render();
-    updateReadout();
   }
 
   function frame(now) {
@@ -291,9 +272,8 @@
     last = now;
     step(dt);
     render();
-    if (now - lastReadout > 250) { updateReadout(); lastReadout = now; }
     if (shouldRun()) raf = requestAnimationFrame(frame);
-    else { running = false; updateReadout(); }
+    else running = false;
   }
 
   function shouldRun() {
@@ -343,11 +323,9 @@
     if (hop.h <= 0.05) hop.v = 2.2 * strength;
     else hop.v = Math.min(2.4, hop.v + 0.8 * strength);
     squash.v += 4 * strength;
-    pokes++;
     sayBoing(cellX * cell, Math.max(16, (g.cy - g.R * g.sy) * cell - 8));
     document.dispatchEvent(new CustomEvent("boyoyoy:rebond"));
     burstUntil = performance.now() + 2600;
-    updateReadout();
     start();
   }
 

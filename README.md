@@ -25,16 +25,16 @@ assets/favicon.svg      l'icône de l'onglet
 
 ## Ajouter un projet
 
-Ouvre `assets/js/config.js`, copie le bloc d'AutoTask dans `projets` et modifie-le :
+Ouvre `assets/js/config.js`, copie le bloc de Pépouze dans `projets` et modifie-le :
 
 | Champ | Rôle |
 | --- | --- |
-| `slug` | l'adresse de la page : `autotask` donne `/#autotask` |
+| `slug` | l'adresse de la page : `pepouze` donne `/#pepouze` |
 | `nom`, `resume`, `description` | le texte affiché |
-| `statut` | `en-developpement`, `en-ligne`, `en-pause` ou `idee` |
+| `statut` | `en-developpement`, `bientot`, `en-ligne`, `en-pause` ou `idee` |
 | `depot` | l'adresse du dépôt, et `public: true` quand le code est visible par tous |
-| `lien` | la démo ou l'app en ligne ; un projet web peut vivre dans ce dépôt, par exemple `projets/mon-projet/` |
-| `ecran` | facultatif : les phrases qui défilent sur le petit téléphone en caractères |
+| `lien`, `lienTexte` | le site, la démo ou l'app en ligne, et le texte du bouton ; un projet web peut vivre dans ce dépôt, par exemple `projets/mon-projet/` |
+| `ecran`, `ecranAgent` | facultatif : les phrases qui défilent sur le petit téléphone en caractères, et qui y répond |
 
 ## Régler Tipeee et l'e-mail
 
