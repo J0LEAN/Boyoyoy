@@ -84,7 +84,7 @@
     out.push(f("." + rule + "."));
     out.push(f("|") + " " + esc(clock) + new Array(PW - clock.length - 3).join(" ") + f("4G") + " " + f("|"));
     out.push(f("|" + rule + "|"));
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 9; i++) {
       var l = lines[i] || { text: "" };
       var txt = esc(fit(l.text, PW - 2));
       out.push(f("|") + " " + (l.cls ? '<span class="' + l.cls + '">' + txt + "</span>" : txt) + " " + f("|"));
@@ -115,14 +115,20 @@
     if (cursor) lines[lines.length - 1].text += "_";
     return [{ text: "" }].concat(lines);
   };
+  // Le résultat : la macro « Quand… Faire… », ou une simple réponse.
+  Phone.prototype.result = function (st) {
+    if (st.quand) {
+      return [{ text: "QUAND " + st.quand, cls: "ph-ok" }, { text: "FAIRE " + st.faire, cls: "ph-ok" }];
+    }
+    return [{ text: "[ok] " + st.reponse, cls: "ph-ok" }];
+  };
   Phone.prototype.draw = function (lines) {
     this.pre.innerHTML = phoneHTML(lines, this.clock());
   };
   Phone.prototype.still = function () {
     var st = this.steps[0];
     this.draw(this.cmd(st.demande).concat([
-      { text: "" }, { text: this.agent + " ···", cls: "ph-ai" }, { text: "[ok] " + st.reponse, cls: "ph-ok" }
-    ]));
+      { text: "" }, { text: this.agent + " ···", cls: "ph-ai" }].concat(this.result(st))));
   };
   Phone.prototype.start = function () {
     if (this.token || reduceMotion.matches) return;
@@ -150,8 +156,7 @@
       }
       if (!token.alive) return;
       this.draw(done.concat([
-        { text: "" }, { text: this.agent + " ···", cls: "ph-ai" }, { text: "[ok] " + st.reponse, cls: "ph-ok" }
-      ]));
+        { text: "" }, { text: this.agent + " ···", cls: "ph-ai" }].concat(this.result(st))));
       await sleep(2000);
       this.i++;
     }
