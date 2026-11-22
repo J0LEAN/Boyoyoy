@@ -199,18 +199,23 @@
   var DESSINS = {
     // Une robe suspendue à un cintre, qui se balance doucement.
     cintre: [
-      [["d-a", "         ?"]],
+      [["d-b", "         ?"]],
       [["d-a", "        _|_"]],
       [["d-a", "   .---'   '---."]],
-      [["d-a", "  /_____________\\"]],
-      ["     \\  ", ["d-b", ".-."], "  /"],
-      ["      | ", ["d-b", "| |"], " |"],
-      ["      | ", ["d-b", "'-'"], " |"],
-      ["      |  ", ["d-b", "*"], "  |"],
-      ["     /  ", ["d-b", "* *"], "  \\"],
-      ["    /  ", ["d-b", "* * *"], "  \\"],
-      ["   /  ", ["d-b", "* * * *"], "  \\"],
-      ["  /_____________\\"]
+      [["d-a", "  /_____________\\"]]
+    ],
+    // L'étoile de Pépouze, avec une boucle d'automatisation au cœur.
+    etoile: [
+      [["d-a", "            /\\"]],
+      [["d-a", "           /  \\"]],
+      [["d-a", "  ________/    \\________"]],
+      [["d-a", "  \\"], "       ", ["d-b", ".->-."], "        ", ["d-a", "/"]],
+      ["   ", ["d-a", "\\"], "      ", ["d-b", "|   |"], "       ", ["d-a", "/"]],
+      ["    ", ["d-a", "\\"], "     ", ["d-b", "'-<-'"], "      ", ["d-a", "/"]],
+      ["    ", ["d-a", "/"], "                ", ["d-a", "\\"]],
+      ["   ", ["d-a", "/"], "      ", ["d-a", ".----."], "      ", ["d-a", "\\"]],
+      ["  ", ["d-a", "/"], "     ", ["d-a", ".'"], "      ", ["d-a", "'."], "     ", ["d-a", "\\"]],
+      [["d-a", " /____.'          '.____\\"]]
     ],
     // Une graine qui pousse : le prochain projet.
     pousse: [
@@ -262,7 +267,7 @@
         (tags ? '<ul class="tags" aria-label="Mots-clés">' + tags + "</ul>" : "") +
         '<span class="card-cta">Ouvrir la page <span aria-hidden="true">→</span></span>' +
       "</div>" +
-      (p.ecran && p.ecran.length ? '<pre class="phone" data-phone="' + esc(p.slug) + '" aria-hidden="true"></pre>' : dessinHTML(p.dessin)) +
+      (p.dessin ? dessinHTML(p.dessin) : (p.ecran && p.ecran.length ? '<pre class="phone" data-phone="' + esc(p.slug) + '" aria-hidden="true"></pre>' : "")) +
     "</a>";
   }
 
@@ -410,7 +415,7 @@
             (code ? "<dt>Code</dt><dd>" + code + "</dd>" : "") +
             "<dt>Page ici</dt><dd><code>/#" + esc(p.slug) + "</code></dd>" +
           "</dl>" +
-          (p.ecran && p.ecran.length
+          (!p.dessin && p.ecran && p.ecran.length
             ? '<figure class="phone-box"><pre class="phone" data-phone="' + esc(p.slug) + '" aria-hidden="true"></pre>' +
               "<figcaption>" + esc(p.ecranLegende || "Aperçu illustratif") + "</figcaption></figure>"
             : (p.dessin ? '<figure class="phone-box">' + dessinHTML(p.dessin, "dessin-grand") +

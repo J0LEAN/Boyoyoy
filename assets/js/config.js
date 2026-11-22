@@ -41,7 +41,6 @@ window.BOYOYOY = {
       lienTexte: "Voir le site de Pépouze",
       // Facultatif : { url: "https://github.com/J0LEAN/...", public: true }
       depot: null,
-      // Ce qui défile sur l'écran du téléphone dessiné en caractères.
       // Couleurs du site Pépouze (son thème sombre, bleu).
       theme: {
         "--ink": "#090c12",
@@ -60,13 +59,8 @@ window.BOYOYOY = {
         "--glass-hi": "rgba(220, 232, 255, 0.075)",
         "--glass-lo": "rgba(220, 232, 255, 0.018)"
       },
-      ecranAgent: "pépouze",
-      ecranLegende: "Exemple : une phrase devient une macro",
-      ecran: [
-        { demande: "en voiture, monte le volume", reponse: "macro prête" },
-        { demande: "à 23\u00a0h, active Ne pas déranger", reponse: "macro prête" },
-        { demande: "écouteurs branchés\u00a0: musique à 60\u00a0%", reponse: "macro prête" }
-      ]
+      dessin: "etoile",
+      dessinLegende: "La mascotte de Pépouze, en caractères",
     },
     {
       slug: "le-vestiaire",
@@ -84,7 +78,7 @@ window.BOYOYOY = {
       depot: { url: "https://github.com/J0LEAN/Le-vestiaire-", public: false },
       // Dessin en caractères sur la carte et la page ("cintre", ou un nom ajouté dans DESSINS, main.js).
       dessin: "cintre",
-      dessinLegende: "Les tenues sont suspendues sur des cintres",
+      dessinLegende: "Un cintre, pour des tenues prêtes à copier",
       // Couleurs propres au projet (reprises du site Le Vestiaire : rose & cerise).
       // Chaque clé remplace un jeton de couleur de Boyoyoy sur sa carte et sa page.
       theme: {
