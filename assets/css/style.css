@@ -791,13 +791,20 @@ code { font-family: var(--font-mono); font-size: 0.9em; }
 .dessin .d-a { color: var(--fg); }
 .dessin .d-b { color: var(--glacier); }
 .dessin-grand { font-size: 15px; }
-.dessin-cintre { transform-origin: 50% 0; }
+.dessin-cintre { transform-origin: 50% 0; font-size: 18px; }
+.dessin-etoile { font-size: 12px; }
+.dessin-grand.dessin-etoile { font-size: 15px; }
 .card-slot .dessin { align-self: flex-start; font-size: 12px; }
 @media (prefers-reduced-motion: no-preference) {
   .dessin-cintre { animation: balance 4.5s ease-in-out infinite; }
   .card-projet:hover .dessin-cintre { animation-duration: 1.6s; }
+  .dessin-etoile { animation: flotte 3.5s ease-in-out infinite; }
 }
 @keyframes balance {
   0%, 100% { transform: rotate(-3deg); }
   50% { transform: rotate(3deg); }
+}
+@keyframes flotte {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
