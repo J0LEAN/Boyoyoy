@@ -49,6 +49,21 @@ window.BOYOYOY = {
         { demande: "à 23\u00a0h, active Ne pas déranger", reponse: "macro prête" },
         { demande: "écouteurs branchés\u00a0: musique à 60\u00a0%", reponse: "macro prête" }
       ]
+    },
+    {
+      slug: "le-vestiaire",
+      nom: "Le Vestiaire",
+      resume: "Un magazine en ligne de tenues complètes, prêtes à copier, avec un lien pour acheter chaque pièce.",
+      description: [
+        "Chaque tenue réunit plusieurs articles (haut, bas, chaussures, accessoires), avec un lien pour acheter chacun d'eux, un conseil «\u00a0pourquoi ça marche\u00a0» et un visuel créé automatiquement à partir des photos des produits.",
+        "On filtre par occasion, style, saison et budget, on met des tenues de côté dans «\u00a0Mon portant\u00a0», et on coche «\u00a0Je l'ai déjà\u00a0?\u00a0» pour les pièces qu'on possède. Le tout dans un design «\u00a0verre liquide, rose & cerise\u00a0», avec les tenues suspendues sur des cintres."
+      ],
+      statut: "en-developpement",
+      plateforme: "Web",
+      ia: "Construit avec Claude",
+      tags: ["mode", "web", "nextjs"],
+      lien: "",
+      depot: { url: "https://github.com/J0LEAN/Le-vestiaire-", public: false }
     }
   ]
 };
