@@ -61,30 +61,27 @@
     pinceau: {
       texte: "theme icones widget pastel cosmos nature neon kawaii horloge meteo ",
       draw: function (g, t, couche) {
-        // La trace de peinture grandit puis recommence.
-        var p = (t * 0.32) % 1.25;
-        var fin = 10 + 80 * Math.min(1, p);
+        // Une vague de peinture qui ondule sous le pinceau.
         if (couche === "b") {
           g.lineCap = "round";
           g.lineWidth = 12;
           g.beginPath();
-          for (var x = 10; x <= fin; x += 2) {
-            var y = 86 + Math.sin(x * 0.12 + 1) * 5;
+          for (var x = 10; x <= 90; x += 2) {
+            var y = 86 + Math.sin(x * 0.12 - t * 2.4) * 5;
             if (x === 10) g.moveTo(x, y); else g.lineTo(x, y);
           }
           g.stroke();
         }
-        // Le pinceau suit le bout de la trace.
-        var bx = fin, by = 86 + Math.sin(fin * 0.12 + 1) * 5;
+        // Le pinceau reste entier au centre et se balance en peignant.
         g.save();
-        g.translate(bx, by - 4);
-        g.rotate(-0.55 + Math.sin(t * 3.2) * 0.08);
+        g.translate(44, 72);
+        g.rotate(0.5 + Math.sin(t * 2.4) * 0.12);
         g.lineCap = "round";
         if (couche === "a") {
           g.lineWidth = 14;
           g.beginPath();
           g.moveTo(0, -30);
-          g.lineTo(0, -78);
+          g.lineTo(0, -70);
           g.stroke();
           g.lineWidth = 18;
           g.beginPath();
