@@ -25,9 +25,9 @@
   var names = (data.projets || []).map(function (p) { return '"' + p.slug + '"'; }).join(", ");
   var CODE =
     'const boyoyoy = { createur: "' + ((data.site && data.site.createur) || "jolean").toLowerCase() +
-    '", projets: [' + names + '], fait_avec: "claude" }; ' +
+    '", projets: [' + names + '], statut: "en_cours" }; ' +
     "function rebondir(blob, t) { blob.r += Math.sin(t * 3) * blob.elasticite; return blob; } " +
-    'while (curieux) { const idee = claude.demander("et si on essayait ?"); construire(idee); partager(idee); } ';
+    'while (curieux) { const idee = imaginer("et si on essayait ?"); construire(idee); partager(idee); } ';
 
   var DENSE = "8#X0S&%@";
   var NOISE = "<>/\\{}[]=+*^?!;:_~|";

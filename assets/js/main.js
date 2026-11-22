@@ -99,7 +99,7 @@
   function Phone(pre, steps, agent) {
     this.pre = pre;
     this.steps = steps;
-    this.agent = agent || "claude";
+    this.agent = agent || "app";
     this.i = 0;
     this.token = null;
   }
@@ -245,7 +245,7 @@
     cards.innerHTML = projets.map(cardHTML).join("") +
       '<div class="card card-slot">' + dessinHTML("pousse") +
         '<pre aria-hidden="true"><span class="c-prompt">$</span> mkdir projets/prochain\n' +
-        '<span class="c-prompt">$</span> claude "on construit quoi ?"\n<span class="caret"></span></pre>' +
+        '<span class="c-prompt">$</span> echo "on construit quoi ?"\n<span class="caret"></span></pre>' +
         "<div><p>Le prochain projet arrivera ici.</p>" +
         "<small>Chaque projet a sa page, sans nom de domaine à acheter.</small></div>" +
       "</div>";

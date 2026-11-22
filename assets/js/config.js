@@ -27,14 +27,14 @@ window.BOYOYOY = {
       resume: "Des macros et des routines pour Android, écrites en une phrase\u00a0: «\u00a0Quand… Faire…\u00a0».",
       description: [
         "Pépouze automatise un téléphone Android avec des règles simples. Quand le Bluetooth de la voiture se connecte, monter le volume et reprendre la musique. À 23\u00a0h, activer Ne pas déranger et baisser la luminosité.",
-        "On peut aussi le dire en une phrase\u00a0: Pépouze prépare la macro sur le téléphone, et peut passer la main à Claude pour les demandes plus complexes. Rien ne s'active avant d'avoir relu la macro.",
+        "On peut aussi le dire en une phrase\u00a0: Pépouze prépare la macro sur le téléphone, et peut passer la main à une IA plus puissante pour les demandes complexes. Rien ne s'active avant d'avoir relu la macro.",
         "11 déclencheurs, 29 actions, 58 exemples prêts à l'emploi, en 13 langues. Gratuite pendant le lancement."
       ],
       // "en-developpement", "bientot", "en-ligne", "en-pause" ou "idee"
       statut: "bientot",
       plateforme: "Android 8 ou plus",
-      ia: "Sur le téléphone, Claude en renfort",
-      tags: ["android", "automatisation", "claude"],
+      ia: "Sur le téléphone",
+      tags: ["android", "automatisation", "ia"],
       // Le site du projet, s'il en a un. Un projet web peut aussi vivre dans
       // ce dépôt, par exemple "projets/mon-projet/".
       lien: "https://pepouzeapp.com",
@@ -78,7 +78,6 @@ window.BOYOYOY = {
       ],
       statut: "en-developpement",
       plateforme: "Web",
-      ia: "Construit avec Claude",
       tags: ["mode", "web", "nextjs"],
       lien: "",
       depot: { url: "https://github.com/J0LEAN/Le-vestiaire-", public: false },
@@ -115,7 +114,6 @@ window.BOYOYOY = {
       ],
       statut: "en-developpement",
       plateforme: "Android 8 ou plus",
-      ia: "Construit avec Claude",
       tags: ["android", "personnalisation", "kotlin"],
       lien: "",
       depot: { url: "https://github.com/J0LEAN/Pimpr", public: true },
