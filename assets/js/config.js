@@ -104,6 +104,41 @@ window.BOYOYOY = {
         "--glass-hi": "rgba(255, 210, 230, 0.08)",
         "--glass-lo": "rgba(255, 210, 230, 0.02)"
       }
+    },
+    {
+      slug: "pimpr",
+      nom: "Pimpr",
+      resume: "Une app Android pour habiller son téléphone : thèmes, packs d'icônes et widgets réglables.",
+      description: [
+        "25 thèmes en six catégories (Pastel, Cosmos, Nature, Minimal, Néon et rétro, Kawaii). Chaque thème réunit un fond d'accueil, un fond de verrouillage, un pack d'icônes et trois widgets assortis.",
+        "11 packs d'icônes à poser sur l'écran d'accueil, et un atelier de widgets (horloge, météo, photo, vidéo, calendrier) : formats, formes, fonds, polices et couleurs se règlent librement, avec un aperçu fidèle de l'écran."
+      ],
+      statut: "en-developpement",
+      plateforme: "Android 8 ou plus",
+      ia: "Construit avec Claude",
+      tags: ["android", "personnalisation", "kotlin"],
+      lien: "",
+      depot: { url: "https://github.com/J0LEAN/Pimpr", public: true },
+      dessin: "accueil",
+      dessinLegende: "Un écran d'accueil habillé : widget et icônes",
+      // Couleurs de l'app Pimpr (indigo et rose), sur fond sombre.
+      theme: {
+        "--ink": "#0b0a1a",
+        "--ink-raise": "#15132e",
+        "--fg": "#f1efff",
+        "--fg-dim": "#a8a3d0",
+        "--fg-faint": "#6c6898",
+        "--line": "rgba(176, 171, 255, 0.16)",
+        "--line-strong": "rgba(176, 171, 255, 0.34)",
+        "--dot": "rgba(176, 171, 255, 0.09)",
+        "--glacier": "#b0abff",
+        "--glacier-glow": "rgba(91, 84, 232, 0.4)",
+        "--ember": "#ff9ccb",
+        "--ember-glow": "rgba(224, 103, 156, 0.4)",
+        "--ember-ink": "#1a1750",
+        "--glass-hi": "rgba(228, 225, 255, 0.075)",
+        "--glass-lo": "rgba(228, 225, 255, 0.018)"
+      }
     }
   ]
 };
