@@ -59,8 +59,14 @@ window.BOYOYOY = {
         "--glass-hi": "rgba(220, 232, 255, 0.075)",
         "--glass-lo": "rgba(220, 232, 255, 0.018)"
       },
-      dessin: "etoile",
-      dessinLegende: "La mascotte de Pépouze, en caractères",
+      // Le petit téléphone : une phrase tapée, et la macro « Quand… Faire… » que Pépouze en tire.
+      ecranAgent: "pépouze",
+      ecranLegende: "Une phrase devient une macro « Quand… Faire… »",
+      ecran: [
+        { demande: "en voiture, monte le volume", quand: "bluetooth auto", faire: "volume +" },
+        { demande: "à 23\u00a0h, active Ne pas déranger", quand: "23:00", faire: "ne pas déranger" },
+        { demande: "écouteurs branchés\u00a0: musique à 60\u00a0%", quand: "écouteurs", faire: "média 60 %" }
+      ],
     },
     {
       slug: "le-vestiaire",
