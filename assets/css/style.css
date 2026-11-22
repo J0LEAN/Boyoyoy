@@ -778,45 +778,16 @@ code { font-family: var(--font-mono); font-size: 0.9em; }
   border-color: var(--line-strong);
 }
 
-/* ---------- Dessins en caractères ---------- */
+/* ---------- Dessins des projets (glyphart.js) ---------- */
 
-.dessin {
-  margin: 0;
+.glyph-art {
+  display: block;
   justify-self: center;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.2;
-  white-space: pre;
-  color: var(--fg-dim);
-  text-shadow: 0 0 18px var(--glacier-glow);
+  align-self: center;
+  width: 190px;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  filter: drop-shadow(0 0 10px var(--glacier-glow));
 }
-.dessin .d-a { color: var(--fg); }
-.dessin .d-b { color: var(--glacier); }
-.dessin-grand { font-size: 15px; }
-.dessin-cintre { transform-origin: 50% 0; font-size: 18px; }
-.dessin-etoile { font-size: 12px; }
-.dessin-grand.dessin-etoile { font-size: 15px; }
-.card-slot .dessin { align-self: flex-start; font-size: 12px; }
-@media (prefers-reduced-motion: no-preference) {
-  .dessin-cintre { animation: balance 4.5s ease-in-out infinite; }
-  .card-projet:hover .dessin-cintre { animation-duration: 1.6s; }
-  .dessin-etoile { animation: flotte 3.5s ease-in-out infinite; }
-}
-@keyframes balance {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
-}
-@keyframes flotte {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-.dessin .d-c { color: var(--ember); }
-.dessin-pinceau { font-size: 13px; transform-origin: 50% 80%; }
-.dessin-grand.dessin-pinceau { font-size: 15px; }
-@media (prefers-reduced-motion: no-preference) {
-  .dessin-pinceau { animation: peint 3s ease-in-out infinite; }
-}
-@keyframes peint {
-  0%, 100% { transform: rotate(-6deg); }
-  50% { transform: rotate(6deg); }
-}
+.glyph-art.grand { width: 320px; }
+.card-slot .glyph-art { width: 150px; flex: none; }

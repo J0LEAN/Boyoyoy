@@ -196,65 +196,13 @@
 
   /* ---------- Dessins en caractères pour les projets ---------- */
 
-  function dline(parts) {
-    return parts.map(function (x) {
-      return typeof x === "string" ? esc(x) : '<span class="' + x[0] + '">' + esc(x[1]) + "</span>";
-    }).join("");
-  }
-  var DESSINS = {
-    // Une robe suspendue à un cintre, qui se balance doucement.
-    cintre: [
-      [["d-b", "         ?"]],
-      [["d-a", "        _|_"]],
-      [["d-a", "   .---'   '---."]],
-      [["d-a", "  /_____________\\"]]
-    ],
-    // L'étoile de Pépouze, avec une boucle d'automatisation au cœur.
-    etoile: [
-      [["d-a", "            /\\"]],
-      [["d-a", "           /  \\"]],
-      [["d-a", "  ________/    \\________"]],
-      [["d-a", "  \\"], "       ", ["d-b", ".->-."], "        ", ["d-a", "/"]],
-      ["   ", ["d-a", "\\"], "      ", ["d-b", "|   |"], "       ", ["d-a", "/"]],
-      ["    ", ["d-a", "\\"], "     ", ["d-b", "'-<-'"], "      ", ["d-a", "/"]],
-      ["    ", ["d-a", "/"], "                ", ["d-a", "\\"]],
-      ["   ", ["d-a", "/"], "      ", ["d-a", ".----."], "      ", ["d-a", "\\"]],
-      ["  ", ["d-a", "/"], "     ", ["d-a", ".'"], "      ", ["d-a", "'."], "     ", ["d-a", "\\"]],
-      [["d-a", " /____.'          '.____\\"]]
-    ],
-    // Un pinceau qui laisse une trace de peinture : la personnalisation.
-    pinceau: [
-      [["d-a", "         .-."]],
-      [["d-a", "         | |"]],
-      [["d-a", "         | |"]],
-      [["d-a", "         | |"]],
-      [["d-a", "         | |"]],
-      [["d-a", "        [___]"]],
-      [["d-a", "        |===|"]],
-      [["d-b", "        /|||\\"]],
-      [["d-b", "       /|||||\\"]],
-      [["d-b", "       \\|||||/"]],
-      [["d-c", "        '~~~'"]],
-      [["d-c", "   ~~~~~~~~~~~~~~~"]],
-      [["d-c", " ~~~~~~~~~~~~~~~~~~~"]]
-    ],
-    // Une graine qui pousse : le prochain projet.
-    pousse: [
-      ["      ", ["d-a", "\\ | /"]],
-      ["    ", ["d-a", "--"], "  ", ["d-b", "@"], "  ", ["d-a", "--"]],
-      ["      ", ["d-a", "/"], " ", ["d-b", "|"], " ", ["d-a", "\\"]],
-      ["     ", ["d-b", "_\\"], "|", ["d-b", "/_"]],
-      ["  .----|----."],
-      ["   \\       /"],
-      ["    '-----'"]
-    ]
-  };
+  // Les dessins sont rendus par glyphart.js, comme le blob de l'accueil.
   function dessinHTML(nom, extra) {
-    var d = DESSINS[nom];
-    if (!d) return "";
-    return '<pre class="dessin dessin-' + esc(nom) + (extra ? " " + extra : "") + '" aria-hidden="true">' +
-      d.map(dline).join("\n") + "</pre>";
+    if (!nom || !(window.GlyphArt && window.GlyphArt.formes[nom])) return "";
+    return '<canvas class="glyph-art glyph-' + esc(nom) + (extra ? " " + extra : "") +
+      '" data-glyph="' + esc(nom) + '" aria-hidden="true"></canvas>';
   }
+  function mountDessins(root) { if (window.GlyphArt) window.GlyphArt.mount(root); }
 
   /* ---------- Cartes projets ---------- */
 
@@ -302,6 +250,7 @@
         "<small>Chaque projet a sa page, sans nom de domaine à acheter.</small></div>" +
       "</div>";
     mountPhones(cards);
+    mountDessins(cards);
   }
 
   var count = $("[data-count]");
@@ -439,7 +388,7 @@
           (!p.dessin && p.ecran && p.ecran.length
             ? '<figure class="phone-box"><pre class="phone" data-phone="' + esc(p.slug) + '" aria-hidden="true"></pre>' +
               "<figcaption>" + esc(p.ecranLegende || "Aperçu illustratif") + "</figcaption></figure>"
-            : (p.dessin ? '<figure class="phone-box">' + dessinHTML(p.dessin, "dessin-grand") +
+            : (p.dessin ? '<figure class="phone-box">' + dessinHTML(p.dessin, "grand") +
               (p.dessinLegende ? "<figcaption>" + esc(p.dessinLegende) + "</figcaption>" : "") + "</figure>" : "")) +
         "</aside>" +
       "</div>" +
@@ -474,6 +423,7 @@
     window.scrollTo(0, 0);
     mountBanner($(".banner", viewInner));
     mountPhones(viewInner);
+    mountDessins(viewInner);
     bindScramble(viewInner);
     externalLinks(viewInner);
     var h = $(".projet-title", viewInner);
