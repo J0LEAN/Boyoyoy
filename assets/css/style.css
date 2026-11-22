@@ -355,7 +355,8 @@ code { font-family: var(--font-mono); font-size: 0.9em; }
 
 .cards { display: grid; gap: 20px; }
 @media (min-width: 900px) {
-  .cards { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cards > .card-projet:first-child { grid-column: 1 / -1; }
 }
 
 .card {
