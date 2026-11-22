@@ -11,6 +11,7 @@
 
   var STATUTS = {
     "en-developpement": "En développement",
+    "bientot": "Bientôt sur Google Play",
     "en-ligne": "En ligne",
     "en-pause": "En pause",
     "idee": "Idée"
@@ -57,7 +58,7 @@
 
   /* ---------- Le téléphone dessiné en caractères ---------- */
 
-  var PW = 15; // largeur intérieure de l'écran
+  var PW = 18; // largeur intérieure de l'écran
 
   function fit(s, n) {
     s = s.length > n ? s.slice(0, n) : s;
@@ -89,14 +90,16 @@
       out.push(f("|") + " " + (l.cls ? '<span class="' + l.cls + '">' + txt + "</span>" : txt) + " " + f("|"));
     }
     out.push(f("|" + rule + "|"));
-    out.push(f("|      ( )      |"));
+    var side = (PW - 3) / 2;
+    out.push(f("|" + new Array(Math.floor(side) + 1).join(" ") + "( )" + new Array(Math.ceil(side) + 1).join(" ") + "|"));
     out.push(f("'" + rule + "'"));
     return out.join("\n");
   }
 
-  function Phone(pre, steps) {
+  function Phone(pre, steps, agent) {
     this.pre = pre;
     this.steps = steps;
+    this.agent = agent || "claude";
     this.i = 0;
     this.token = null;
   }
@@ -118,7 +121,7 @@
   Phone.prototype.still = function () {
     var st = this.steps[0];
     this.draw(this.cmd(st.demande).concat([
-      { text: "" }, { text: "claude ···", cls: "ph-ai" }, { text: "[ok] " + st.reponse, cls: "ph-ok" }
+      { text: "" }, { text: this.agent + " ···", cls: "ph-ai" }, { text: "[ok] " + st.reponse, cls: "ph-ok" }
     ]));
   };
   Phone.prototype.start = function () {
@@ -142,12 +145,12 @@
       var done = this.cmd(st.demande);
       for (var d = 0; d < 6; d++) {
         if (!token.alive) return;
-        this.draw(done.concat([{ text: "" }, { text: "claude " + "···".slice(0, (d % 3) + 1), cls: "ph-ai" }]));
+        this.draw(done.concat([{ text: "" }, { text: this.agent + " " + "···".slice(0, (d % 3) + 1), cls: "ph-ai" }]));
         await sleep(230);
       }
       if (!token.alive) return;
       this.draw(done.concat([
-        { text: "" }, { text: "claude ···", cls: "ph-ai" }, { text: "[ok] " + st.reponse, cls: "ph-ok" }
+        { text: "" }, { text: this.agent + " ···", cls: "ph-ai" }, { text: "[ok] " + st.reponse, cls: "ph-ok" }
       ]));
       await sleep(2000);
       this.i++;
@@ -166,7 +169,7 @@
     $$("[data-phone]", root).forEach(function (pre) {
       var p = projets.find(function (x) { return x.slug === pre.getAttribute("data-phone"); });
       if (!p || !p.ecran || !p.ecran.length) return;
-      var ph = new Phone(pre, p.ecran);
+      var ph = new Phone(pre, p.ecran, p.ecranAgent);
       pre._phone = ph;
       ph.still();
       if (phoneObserver) phoneObserver.observe(pre); else ph.start();
@@ -314,18 +317,18 @@
     var idx = projets.indexOf(p);
     var next = projets.length > 1 ? projets[(idx + 1) % projets.length] : null;
     var desc = (p.description || []).map(function (d) { return "<p>" + esc(d) + "</p>"; }).join("");
-    var code;
+    var code = "";
     if (p.depot && p.depot.url && p.depot.public) {
       code = '<a href="' + esc(p.depot.url) + '">' + esc(p.depot.url.replace("https://", "")) + "</a>";
-    } else {
+    } else if (p.depot && p.depot.url) {
       code = "Dépôt privé";
     }
     var actions = "";
-    if (p.lien) actions += '<a class="btn btn-primary" href="' + esc(p.lien) + '">Ouvrir ' + esc(p.nom) +
+    if (p.lien) actions += '<a class="btn btn-primary" href="' + esc(p.lien) + '">' + esc(p.lienTexte || "Ouvrir " + p.nom) +
       ' <span class="arrow" aria-hidden="true">→</span></a>';
     if (p.depot && p.depot.url && p.depot.public) {
       actions += '<a class="btn btn-ghost" href="' + esc(p.depot.url) + '">Voir le code</a>';
-    } else {
+    } else if (p.depot && p.depot.url) {
       actions += '<span class="note-private"><span aria-hidden="true">[privé]</span> Le code n\'est pas encore public.</span>';
     }
     actions += '<a class="btn btn-ghost" href="' + esc(site.github) + '">Suivre sur GitHub</a>';
@@ -347,12 +350,13 @@
             (p.plateforme ? "<dt>Plateforme</dt><dd>" + esc(p.plateforme) + "</dd>" : "") +
             (p.ia ? "<dt>IA</dt><dd>" + esc(p.ia) + "</dd>" : "") +
             (p.debut ? "<dt>Démarré</dt><dd>" + esc(p.debut) + "</dd>" : "") +
-            "<dt>Code</dt><dd>" + code + "</dd>" +
-            "<dt>Adresse</dt><dd><code>/#" + esc(p.slug) + "</code></dd>" +
+            (p.lien ? '<dt>Site</dt><dd><a href="' + esc(p.lien) + '">' + esc(p.lien.replace(/^https?:\/\//, "").replace(/\/$/, "")) + "</a></dd>" : "") +
+            (code ? "<dt>Code</dt><dd>" + code + "</dd>" : "") +
+            "<dt>Page ici</dt><dd><code>/#" + esc(p.slug) + "</code></dd>" +
           "</dl>" +
           (p.ecran && p.ecran.length
             ? '<figure class="phone-box"><pre class="phone" data-phone="' + esc(p.slug) + '" aria-hidden="true"></pre>' +
-              "<figcaption>Aperçu illustratif de l'idée</figcaption></figure>"
+              "<figcaption>" + esc(p.ecranLegende || "Aperçu illustratif") + "</figcaption></figure>"
             : "") +
         "</aside>" +
       "</div>" +
