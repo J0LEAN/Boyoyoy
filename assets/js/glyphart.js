@@ -61,38 +61,51 @@
     pinceau: {
       texte: "theme icones widget pastel cosmos nature neon kawaii horloge meteo ",
       draw: function (g, t, couche) {
-        // Une vague de peinture qui ondule sous le pinceau.
-        if (couche === "b") {
-          g.lineCap = "round";
-          g.lineWidth = 12;
-          g.beginPath();
-          for (var x = 10; x <= 90; x += 2) {
-            var y = 86 + Math.sin(x * 0.12 - t * 2.4) * 5;
-            if (x === 10) g.moveTo(x, y); else g.lineTo(x, y);
-          }
-          g.stroke();
-        }
-        // Le pinceau reste entier au centre et se balance en peignant.
+        // Une palette de peintre, avec un trou pour le pouce et des taches de couleur.
+        var taches = [[29, 66, 8], [46, 59, 8.5], [63, 62, 8], [72, 78, 7.5]];
         g.save();
-        g.translate(44, 72);
-        g.rotate(0.5 + Math.sin(t * 2.4) * 0.12);
+        g.translate(48, 74);
+        g.rotate(-0.12);
+        g.translate(-48, -74);
+        if (couche === "a") {
+          // Le bois de la palette, plus discret que les taches de peinture.
+          g.globalAlpha = 0.6;
+          g.beginPath();
+          g.ellipse(48, 72, 38, 21, 0, 0, Math.PI * 2);
+          g.fill();
+          g.globalAlpha = 1;
+          g.globalCompositeOperation = "destination-out";
+          g.beginPath();
+          g.arc(30, 81, 6, 0, Math.PI * 2);
+          g.fill();
+          taches.forEach(function (c) { g.beginPath(); g.arc(c[0], c[1], c[2], 0, Math.PI * 2); g.fill(); });
+          g.globalCompositeOperation = "source-over";
+        } else {
+          taches.forEach(function (c) { g.beginPath(); g.arc(c[0], c[1], c[2], 0, Math.PI * 2); g.fill(); });
+        }
+        g.restore();
+        // Le pinceau trempe dans une tache, puis remonte.
+        var trempe = Math.max(0, Math.sin(t * 2.2)) * 6;
+        g.save();
+        g.translate(62, 50 + trempe);
+        g.rotate(0.45 + Math.sin(t * 1.1) * 0.05);
         g.lineCap = "round";
         if (couche === "a") {
+          g.lineWidth = 11;
+          g.beginPath();
+          g.moveTo(0, -26);
+          g.lineTo(0, -52);
+          g.stroke();
           g.lineWidth = 14;
           g.beginPath();
-          g.moveTo(0, -30);
-          g.lineTo(0, -70);
-          g.stroke();
-          g.lineWidth = 18;
-          g.beginPath();
-          g.moveTo(0, -22);
-          g.lineTo(0, -32);
+          g.moveTo(0, -18);
+          g.lineTo(0, -27);
           g.stroke();
         } else {
           g.beginPath();
-          g.moveTo(-10, -21);
-          g.quadraticCurveTo(-13, -4, 0, 4);
-          g.quadraticCurveTo(13, -4, 10, -21);
+          g.moveTo(-8, -17);
+          g.quadraticCurveTo(-10, -3, 0, 4);
+          g.quadraticCurveTo(10, -3, 8, -17);
           g.closePath();
           g.fill();
         }
