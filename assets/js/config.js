@@ -63,7 +63,26 @@ window.BOYOYOY = {
       ia: "Construit avec Claude",
       tags: ["mode", "web", "nextjs"],
       lien: "",
-      depot: { url: "https://github.com/J0LEAN/Le-vestiaire-", public: false }
+      depot: { url: "https://github.com/J0LEAN/Le-vestiaire-", public: false },
+      // Couleurs propres au projet (reprises du site Le Vestiaire : rose & cerise).
+      // Chaque clé remplace un jeton de couleur de Boyoyoy sur sa carte et sa page.
+      theme: {
+        "--ink": "#0e0610",
+        "--ink-raise": "#1a0d17",
+        "--fg": "#fff5fa",
+        "--fg-dim": "#c9a9bd",
+        "--fg-faint": "#7d5f73",
+        "--line": "rgba(255, 155, 196, 0.16)",
+        "--line-strong": "rgba(255, 155, 196, 0.34)",
+        "--dot": "rgba(255, 155, 196, 0.09)",
+        "--glacier": "#ff9bc4",
+        "--glacier-glow": "rgba(185, 160, 255, 0.35)",
+        "--ember": "#f06aa0",
+        "--ember-glow": "rgba(209, 31, 90, 0.45)",
+        "--ember-ink": "#26121f",
+        "--glass-hi": "rgba(255, 210, 230, 0.08)",
+        "--glass-lo": "rgba(255, 210, 230, 0.02)"
+      }
     }
   ]
 };

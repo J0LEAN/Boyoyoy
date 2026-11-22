@@ -195,9 +195,23 @@
       esc(STATUTS[statut] || statut) + "</span>";
   }
 
+  function themeStyle(p) {
+    if (!p.theme) return "";
+    return ' style="' + esc(Object.keys(p.theme).map(function (k) { return k + ":" + p.theme[k]; }).join(";")) + '"';
+  }
+
+  var themed = [];
+  function applyTheme(p) {
+    var st = document.documentElement.style;
+    themed.forEach(function (k) { st.removeProperty(k); });
+    themed = [];
+    if (!p || !p.theme) return;
+    Object.keys(p.theme).forEach(function (k) { st.setProperty(k, p.theme[k]); themed.push(k); });
+  }
+
   function cardHTML(p) {
     var tags = (p.tags || []).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
-    return '<a class="card card-projet" href="#' + esc(p.slug) + '">' +
+    return '<a class="card card-projet" href="#' + esc(p.slug) + '"' + themeStyle(p) + '>' +
       '<div class="card-body">' +
         '<div class="card-top">' + chip(p.statut) +
           '<span class="card-path">./projets/' + esc(p.slug) + "</span></div>" +
@@ -367,6 +381,7 @@
   function showHome(id) {
     var fromProjet = !view.hidden;
     if (fromProjet) unmountPhones(view);
+    applyTheme(null);
     view.hidden = true;
     home.hidden = false;
     document.title = site.nom || "Boyoyoy";
@@ -382,6 +397,7 @@
 
   function showProjet(p) {
     unmountPhones(view);
+    applyTheme(p);
     viewInner.innerHTML = projetHTML(p);
     home.hidden = true;
     view.hidden = false;
