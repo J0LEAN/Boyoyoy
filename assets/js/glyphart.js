@@ -15,7 +15,8 @@
   var EDGE = ".:+*";
 
   // Chaque forme dessine dans un carré de 100 × 100.
-  // couche "a" : la structure (blanc vers glacier), couche "b" : l'accent (braise).
+  // couche "a" : la structure (blanc vers glacier), couche "b" : l'accent (braise),
+  // couche "c" : les reflets et petits détails (blanc). Une forme ignore les couches inutiles.
   var FORMES = {
     cintre: {
       texte: "robe veste jean jupe basket sac foulard manteau chemise tenue ",
@@ -43,7 +44,7 @@
           g.quadraticCurveTo(94, 72, 90, 64);
           g.closePath();
           g.stroke();
-        } else {
+        } else if (couche === "b") {
           g.beginPath();
           g.arc(50, 34, 7, 0, Math.PI * 2);
           g.fill();
@@ -59,57 +60,77 @@
     },
 
     pinceau: {
+      cells: 32,
       texte: "theme icones widget pastel cosmos nature neon kawaii horloge meteo ",
       draw: function (g, t, couche) {
-        // Une palette de peintre, avec un trou pour le pouce et des taches de couleur.
-        var taches = [[29, 66, 8], [46, 59, 8.5], [63, 62, 8], [72, 78, 7.5]];
+        // La palette, en bas à gauche : rebord, trou pour le pouce, taches et reflets.
+        var taches = [[16, 76, 5.5], [27, 70, 6], [40, 68, 5.5], [50, 75, 5]];
         g.save();
-        g.translate(48, 74);
-        g.rotate(-0.12);
-        g.translate(-48, -74);
+        g.translate(34, 80);
+        g.rotate(-0.1);
+        g.translate(-34, -80);
         if (couche === "a") {
-          // Le bois de la palette, plus discret que les taches de peinture.
-          g.globalAlpha = 0.6;
+          g.globalAlpha = 0.45;
           g.beginPath();
-          g.ellipse(48, 72, 38, 21, 0, 0, Math.PI * 2);
+          g.ellipse(34, 80, 28, 15, 0, 0, Math.PI * 2);
           g.fill();
           g.globalAlpha = 1;
+          g.lineWidth = 3.5;
+          g.beginPath();
+          g.ellipse(34, 80, 28, 15, 0, 0, Math.PI * 2);
+          g.stroke();
           g.globalCompositeOperation = "destination-out";
           g.beginPath();
-          g.arc(30, 81, 6, 0, Math.PI * 2);
+          g.arc(22, 87, 4.5, 0, Math.PI * 2);
           g.fill();
           taches.forEach(function (c) { g.beginPath(); g.arc(c[0], c[1], c[2], 0, Math.PI * 2); g.fill(); });
           g.globalCompositeOperation = "source-over";
+        } else if (couche === "b") {
+          taches.forEach(function (c, i) {
+            var r = c[2] * (1 + 0.06 * Math.sin(t * 2 + i));
+            g.beginPath(); g.arc(c[0], c[1], r, 0, Math.PI * 2); g.fill();
+          });
         } else {
-          taches.forEach(function (c) { g.beginPath(); g.arc(c[0], c[1], c[2], 0, Math.PI * 2); g.fill(); });
+          taches.forEach(function (c) { g.beginPath(); g.arc(c[0] - 2, c[1] - 2.5, 1.8, 0, Math.PI * 2); g.fill(); });
         }
         g.restore();
-        // Le pinceau trempe dans une tache, puis remonte.
-        var trempe = Math.max(0, Math.sin(t * 2.2)) * 6;
+
+        // Le pinceau, en haut à droite, bien séparé : il s'approche, puis remonte.
+        var cycle = (t * 0.45) % 1;
+        var approche = Math.sin(cycle * Math.PI) * 6;
         g.save();
-        g.translate(62, 50 + trempe);
-        g.rotate(0.45 + Math.sin(t * 1.1) * 0.05);
+        g.translate(78, 46 + approche);
+        g.rotate(0.32 + Math.sin(t * 1.1) * 0.04);
         g.lineCap = "round";
         if (couche === "a") {
+          g.lineWidth = 8;
+          g.beginPath(); g.moveTo(0, -25); g.lineTo(0, -40); g.stroke();
+          g.beginPath(); g.arc(0, -42, 4, 0, Math.PI * 2); g.fill();
           g.lineWidth = 11;
+          g.beginPath(); g.moveTo(0, -14); g.lineTo(0, -25); g.stroke();
+        } else if (couche === "b") {
           g.beginPath();
-          g.moveTo(0, -26);
-          g.lineTo(0, -52);
-          g.stroke();
-          g.lineWidth = 14;
-          g.beginPath();
-          g.moveTo(0, -18);
-          g.lineTo(0, -27);
-          g.stroke();
-        } else {
-          g.beginPath();
-          g.moveTo(-8, -17);
-          g.quadraticCurveTo(-10, -3, 0, 4);
-          g.quadraticCurveTo(10, -3, 8, -17);
+          g.moveTo(-6, -13);
+          g.quadraticCurveTo(-8, -1, 0, 5);
+          g.quadraticCurveTo(8, -1, 6, -13);
           g.closePath();
           g.fill();
+        } else {
+          // Deux bagues sur la virole, et un reflet sur le manche.
+          g.lineWidth = 1.6;
+          g.beginPath(); g.moveTo(-6, -17); g.lineTo(6, -17); g.stroke();
+          g.beginPath(); g.moveTo(-6, -22); g.lineTo(6, -22); g.stroke();
+          g.beginPath(); g.moveTo(-2, -29); g.lineTo(-2, -38); g.stroke();
         }
         g.restore();
+
+        // Une goutte tombe du pinceau vers la palette.
+        if (couche === "b" && cycle > 0.5) {
+          var k = (cycle - 0.5) / 0.5;
+          g.beginPath();
+          g.arc(78, 52 + k * 18, 2.4 * (1 - k * 0.4), 0, Math.PI * 2);
+          g.fill();
+        }
       }
     },
 
@@ -127,6 +148,7 @@
           g.fill();
           return;
         }
+        if (couche !== "b") return;
         var grandit = 0.88 + 0.12 * Math.sin(t * 0.9);
         g.translate(50, 64);
         g.rotate(Math.sin(t * 1.1) * 0.07);
@@ -160,10 +182,11 @@
     this.c = canvas;
     this.ctx = canvas.getContext("2d");
     this.forme = FORMES[canvas.getAttribute("data-glyph")];
+    this.n = (this.forme && this.forme.cells) || CELLS;
     this.mask = document.createElement("canvas");
-    this.mask.width = this.mask.height = CELLS * SS;
+    this.mask.width = this.mask.height = this.n * SS;
     this.mctx = this.mask.getContext("2d", { willReadFrequently: true });
-    this.heat = new Float32Array(CELLS * CELLS);
+    this.heat = new Float32Array(this.n * this.n);
     this.ptr = null;
     this.visible = true;
     this.t = Math.random() * 10;
@@ -172,7 +195,7 @@
     var self = this;
     canvas.addEventListener("pointermove", function (e) {
       var r = canvas.getBoundingClientRect();
-      self.ptr = { x: (e.clientX - r.left) / r.width * CELLS, y: (e.clientY - r.top) / r.height * CELLS };
+      self.ptr = { x: (e.clientX - r.left) / r.width * self.n, y: (e.clientY - r.top) / r.height * self.n };
     });
     canvas.addEventListener("pointerleave", function () { self.ptr = null; });
   }
@@ -190,12 +213,12 @@
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     this.c.width = Math.round(w * dpr);
     this.c.height = Math.round(w * dpr);
-    this.cell = this.c.width / CELLS;
+    this.cell = this.c.width / this.n;
   };
 
   // Couverture de chaque couche, cellule par cellule.
   Art.prototype.sample = function (couche) {
-    var m = this.mctx, n = CELLS * SS;
+    var m = this.mctx, n = this.n * SS;
     m.setTransform(1, 0, 0, 1, 0, 0);
     m.clearRect(0, 0, n, n);
     m.setTransform(n / 100, 0, 0, n / 100, 0, 0);
@@ -204,10 +227,10 @@
     this.forme.draw(m, this.t, couche);
     m.restore();
     var d = m.getImageData(0, 0, n, n).data;
-    var out = new Float32Array(CELLS * CELLS);
+    var out = new Float32Array(this.n * this.n);
     for (var y = 0; y < n; y++) {
       for (var x = 0; x < n; x++) {
-        out[((y / SS) | 0) * CELLS + ((x / SS) | 0)] += d[(y * n + x) * 4 + 3];
+        out[((y / SS) | 0) * this.n + ((x / SS) | 0)] += d[(y * n + x) * 4 + 3];
       }
     }
     var k = 255 * SS * SS;
@@ -217,7 +240,7 @@
 
   Art.prototype.render = function () {
     if (!this.forme) return;
-    var A = this.sample("a"), B = this.sample("b");
+    var A = this.sample("a"), B = this.sample("b"), C = this.sample("c");
     var g = this.ctx, cs = this.cell, txt = this.forme.texte;
     var scroll = Math.floor(this.t * 5);
     g.clearRect(0, 0, this.c.width, this.c.height);
@@ -225,18 +248,18 @@
     g.textAlign = "center";
     g.textBaseline = "middle";
     var gap = Math.max(1, cs * 0.08);
-    for (var j = 0; j < CELLS; j++) {
-      for (var i = 0; i < CELLS; i++) {
-        var id = j * CELLS + i, a = A[id], b = B[id], cov = Math.min(1, a + b);
+    for (var j = 0; j < this.n; j++) {
+      for (var i = 0; i < this.n; i++) {
+        var id = j * this.n + i, a = A[id], b = B[id], c = C[id], cov = Math.min(1, a + b + c);
         if (cov < 0.08) continue;
-        var col = b > a ? this.ember : (j < CELLS * 0.45 ? this.fg : this.glacier);
+        var col = c > 0.25 ? this.fg : (b > a ? this.ember : (j < this.n * 0.45 ? this.fg : this.glacier));
         g.fillStyle = col;
         g.globalAlpha = 0.1 + 0.28 * cov;
         g.fillRect(i * cs + gap / 2, j * cs + gap / 2, cs - gap, cs - gap);
         var ch;
         if (this.heat[id] > 0.05 && Math.random() < this.heat[id]) ch = NOISE[(Math.random() * NOISE.length) | 0];
         else if (cov > 0.55) {
-          ch = txt[(i + j * CELLS + scroll) % txt.length];
+          ch = txt[(i + j * this.n + scroll) % txt.length];
           if (ch === " ") ch = "·";
         } else ch = EDGE[Math.min(EDGE.length - 1, (cov * EDGE.length * 1.6) | 0)];
         g.globalAlpha = 0.45 + 0.55 * cov;
@@ -251,10 +274,10 @@
     var h = this.heat;
     for (var q = 0; q < h.length; q++) if (h[q] > 0) h[q] = Math.max(0, h[q] - dt * 2.2);
     if (this.ptr) {
-      for (var y = 0; y < CELLS; y++) {
-        for (var x = 0; x < CELLS; x++) {
+      for (var y = 0; y < this.n; y++) {
+        for (var x = 0; x < this.n; x++) {
           var d = Math.hypot(x + 0.5 - this.ptr.x, y + 0.5 - this.ptr.y);
-          if (d < 3) h[y * CELLS + x] = Math.max(h[y * CELLS + x], 1 - d / 3);
+          if (d < 3) h[y * this.n + x] = Math.max(h[y * this.n + x], 1 - d / 3);
         }
       }
     }
