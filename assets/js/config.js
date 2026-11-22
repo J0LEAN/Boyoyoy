@@ -42,6 +42,24 @@ window.BOYOYOY = {
       // Facultatif : { url: "https://github.com/J0LEAN/...", public: true }
       depot: null,
       // Ce qui défile sur l'écran du téléphone dessiné en caractères.
+      // Couleurs du site Pépouze (son thème sombre, bleu).
+      theme: {
+        "--ink": "#090c12",
+        "--ink-raise": "#10141c",
+        "--fg": "#eef2f8",
+        "--fg-dim": "#8792a6",
+        "--fg-faint": "#5a6578",
+        "--line": "rgba(111, 168, 255, 0.16)",
+        "--line-strong": "rgba(111, 168, 255, 0.34)",
+        "--dot": "rgba(111, 168, 255, 0.09)",
+        "--glacier": "#6fa8ff",
+        "--glacier-glow": "rgba(141, 180, 250, 0.3)",
+        "--ember": "#0866ff",
+        "--ember-glow": "rgba(8, 102, 255, 0.45)",
+        "--ember-ink": "#ffffff",
+        "--glass-hi": "rgba(220, 232, 255, 0.075)",
+        "--glass-lo": "rgba(220, 232, 255, 0.018)"
+      },
       ecranAgent: "pépouze",
       ecranLegende: "Exemple : une phrase devient une macro",
       ecran: [
