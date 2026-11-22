@@ -810,8 +810,13 @@ code { font-family: var(--font-mono); font-size: 0.9em; }
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
-.dessin-accueil { font-size: 14px; }
-.dessin-grand.dessin-accueil { font-size: 16px; }
+.dessin .d-c { color: var(--ember); }
+.dessin-pinceau { font-size: 13px; transform-origin: 50% 80%; }
+.dessin-grand.dessin-pinceau { font-size: 15px; }
 @media (prefers-reduced-motion: no-preference) {
-  .dessin-accueil { animation: flotte 4s ease-in-out infinite; }
+  .dessin-pinceau { animation: peint 3s ease-in-out infinite; }
+}
+@keyframes peint {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
 }
