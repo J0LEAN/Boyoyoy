@@ -1,6 +1,6 @@
 # Boyoyoy
 
-Le site qui rassemble les projets de **Jolean**, construits avec Claude.
+Le site qui rassemble les projets de **Jolean**.
 Chaque projet a sa propre page (`/#nom-du-projet`), donc pas besoin d'acheter un nom de domaine par projet.
 
 Adresse une fois GitHub Pages activé : **https://j0lean.github.io/Boyoyoy/**

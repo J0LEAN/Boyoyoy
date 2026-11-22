@@ -135,7 +135,7 @@
     },
 
     pousse: {
-      texte: "mkdir prochain projet idee claude construire partager ",
+      texte: "mkdir prochain projet idee construire partager ",
       draw: function (g, t, couche) {
         if (couche === "a") {
           g.fillRect(26, 64, 48, 8);
