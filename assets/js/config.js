@@ -12,9 +12,9 @@ window.BOYOYOY = {
     github: "https://github.com/J0LEAN",
     depot: "https://github.com/J0LEAN/Boyoyoy",
 
-    // Adresse de ta page Tipeee, par exemple "https://fr.tipeee.com/ton-pseudo".
-    // Tant qu'elle est vide, le bouton affiche « Tipeee arrive bientôt ».
-    tipeee: "",
+    // Adresse de ta page Ko-fi pour les dons.
+    // Si elle est vide, le bouton affiche « Les dons arrivent bientôt ».
+    kofi: "https://ko-fi.com/j0lean",
 
     // Optionnel : une adresse e-mail ajoute une carte dans la section Contact.
     email: ""
@@ -119,8 +119,8 @@ window.BOYOYOY = {
       tags: ["android", "personnalisation", "kotlin"],
       lien: "",
       depot: { url: "https://github.com/J0LEAN/Pimpr", public: true },
-      dessin: "accueil",
-      dessinLegende: "Un écran d'accueil habillé : widget et icônes",
+      dessin: "pinceau",
+      dessinLegende: "Un coup de pinceau sur ton écran d'accueil",
       // Couleurs de l'app Pimpr (indigo et rose), sur fond sombre.
       theme: {
         "--ink": "#0b0a1a",

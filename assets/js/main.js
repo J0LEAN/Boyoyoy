@@ -31,14 +31,14 @@
 
   $$('[data-link="github"]').forEach(function (a) { a.href = site.github; });
   $$('[data-link="issues"]').forEach(function (a) { a.href = site.depot + "/issues/new"; });
-  $$('[data-link="tipeee"]').forEach(function (a) {
-    if (site.tipeee) {
-      a.href = site.tipeee;
+  $$('[data-link="kofi"]').forEach(function (a) {
+    if (site.kofi) {
+      a.href = site.kofi;
     } else {
       a.removeAttribute("href");
       a.classList.add("is-pending");
       a.setAttribute("aria-disabled", "true");
-      a.innerHTML = "Tipeee arrive bientôt";
+      a.innerHTML = "Les dons arrivent bientôt";
     }
   });
   $$("[data-createur]").forEach(function (el) { el.textContent = site.createur || "Jolean"; });
@@ -222,19 +222,21 @@
       ["  ", ["d-a", "/"], "     ", ["d-a", ".'"], "      ", ["d-a", "'."], "     ", ["d-a", "\\"]],
       [["d-a", " /____.'          '.____\\"]]
     ],
-    // Un écran d'accueil habillé : un widget horloge et une grille d'icônes.
-    accueil: [
-      [".--------------."],
-      ["| ", ["d-b", ".----------."], " |"],
-      ["| ", ["d-b", "|  12:30   |"], " |"],
-      ["| ", ["d-b", "'----------'"], " |"],
-      ["|              |"],
-      ["| ", ["d-a", "[]"], " ", ["d-b", "<>"], " ", ["d-a", "()"], " ", ["d-b", "**"], "  |"],
-      ["| ", ["d-b", "##"], " ", ["d-a", "[]"], " ", ["d-b", "<>"], " ", ["d-a", "()"], "  |"],
-      ["| ", ["d-a", "()"], " ", ["d-b", "**"], " ", ["d-a", "[]"], " ", ["d-b", "##"], "  |"],
-      ["|              |"],
-      ["|     ( )      |"],
-      ["'--------------'"]
+    // Un pinceau qui laisse une trace de peinture : la personnalisation.
+    pinceau: [
+      [["d-a", "         .-."]],
+      [["d-a", "         | |"]],
+      [["d-a", "         | |"]],
+      [["d-a", "         | |"]],
+      [["d-a", "         | |"]],
+      [["d-a", "        [___]"]],
+      [["d-a", "        |===|"]],
+      [["d-b", "        /|||\\"]],
+      [["d-b", "       /|||||\\"]],
+      [["d-b", "       \\|||||/"]],
+      [["d-c", "        '~~~'"]],
+      [["d-c", "   ~~~~~~~~~~~~~~~"]],
+      [["d-c", " ~~~~~~~~~~~~~~~~~~~"]]
     ],
     // Une graine qui pousse : le prochain projet.
     pousse: [

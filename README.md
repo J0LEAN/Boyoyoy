@@ -9,7 +9,7 @@ Adresse une fois GitHub Pages activé : **https://j0lean.github.io/Boyoyoy/**
 
 - **Accueil** : le nom, et un blob fait de caractères de code qui ondule, esquive le curseur et rebondit quand on clique dessus.
 - **Projets** : une carte par projet, et une page détaillée pour chacun (statut, plateforme, lien vers le code ou la démo).
-- **Soutenir** : le bouton Tipeee.
+- **Soutenir** : le bouton de dons Ko-fi.
 - **Contact** : le profil GitHub et un lien pour ouvrir une issue sur ce dépôt.
 
 Le site est 100 % statique (HTML, CSS, JavaScript), sans étape de build.
@@ -36,10 +36,10 @@ Ouvre `assets/js/config.js`, copie le bloc de Pépouze dans `projets` et modifie
 | `lien`, `lienTexte` | le site, la démo ou l'app en ligne, et le texte du bouton ; un projet web peut vivre dans ce dépôt, par exemple `projets/mon-projet/` |
 | `ecran`, `ecranAgent` | facultatif : les phrases qui défilent sur le petit téléphone en caractères, et qui y répond |
 
-## Régler Tipeee et l'e-mail
+## Régler Ko-fi et l'e-mail
 
-Dans `assets/js/config.js`, remplis `site.tipeee` avec l'adresse de ta page Tipeee.
-Tant qu'il est vide, le bouton affiche « Tipeee arrive bientôt ».
+Dans `assets/js/config.js`, `site.kofi` contient l'adresse de ta page Ko-fi (https://ko-fi.com/j0lean).
+Si tu le vides, le bouton affiche « Les dons arrivent bientôt ».
 Le champ `site.email` est facultatif : rempli, il ajoute une carte e-mail dans Contact.
 
 ## Mettre le site en ligne (gratuit)
